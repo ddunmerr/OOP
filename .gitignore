@@ -1,0 +1,11 @@
+﻿################################################################################
+# Данный GITIGNORE-файл был автоматически создан Microsoft(R) Visual Studio.
+################################################################################
+
+/lab3/task1/x64/Debug
+/lab3/task2_tests/x64/Debug
+/lab3/task1_tests/x64/Debug
+/lab3/task2/x64/Debug
+/lab3/task3/x64/Debug
+/lab3/task3_tests/x64/Debug
+/lab3/x64/Debug
