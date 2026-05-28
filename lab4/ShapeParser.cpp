@@ -16,14 +16,19 @@ std::unique_ptr<IShape> CShapeParser::ParseCommand(const std::string& line)
 {
 	std::istringstream iss(line);
 	std::string shapeType;
-	iss >> shapeType;
+	if (!(iss >> shapeType))
+	{
+		return nullptr;
+	}
 
 	if (shapeType == COMMAND_LINE)
 	{
 		double x1, y1, x2, y2;
 		std::string colorStr;
-		iss >> x1 >> y1 >> x2 >> y2 >> colorStr;
-
+		if (!(iss >> x1 >> y1 >> x2 >> y2 >> colorStr))
+		{
+			return nullptr;
+		}
 		CPoint start(x1, y1);
 		CPoint end(x2, y2);
 		uint32_t color = ParseColor(colorStr);
@@ -34,8 +39,10 @@ std::unique_ptr<IShape> CShapeParser::ParseCommand(const std::string& line)
 	{
 		double x1, y1, x2, y2, x3, y3;
 		std::string outlineStr, fillStr;
-		iss >> x1 >> y1 >> x2 >> y2 >> x3 >> y3 >> outlineStr >> fillStr;
-
+		if (!(iss >> x1 >> y1 >> x2 >> y2 >> x3 >> y3 >> outlineStr >> fillStr))
+		{
+			return nullptr;
+		}
 		CPoint v1(x1, y1), v2(x2, y2), v3(x3, y3);
 		uint32_t outline = ParseColor(outlineStr);
 		uint32_t fill = ParseColor(fillStr);
@@ -46,8 +53,10 @@ std::unique_ptr<IShape> CShapeParser::ParseCommand(const std::string& line)
 	{
 		double left, top, width, height;
 		std::string outlineStr, fillStr;
-		iss >> left >> top >> width >> height >> outlineStr >> fillStr;
-
+		if (!(iss >> left >> top >> width >> height >> outlineStr >> fillStr))
+		{
+			return nullptr;
+		}
 		CPoint leftTop(left, top);
 		uint32_t outline = ParseColor(outlineStr);
 		uint32_t fill = ParseColor(fillStr);
@@ -58,8 +67,10 @@ std::unique_ptr<IShape> CShapeParser::ParseCommand(const std::string& line)
 	{
 		double cx, cy, radius;
 		std::string outlineStr, fillStr;
-		iss >> cx >> cy >> radius >> outlineStr >> fillStr;
-
+		if (!(iss >> cx >> cy >> radius >> outlineStr >> fillStr))
+		{
+			return nullptr;
+		}
 		CPoint center(cx, cy);
 		uint32_t outline = ParseColor(outlineStr);
 		uint32_t fill = ParseColor(fillStr);
