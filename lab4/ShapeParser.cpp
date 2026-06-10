@@ -1,9 +1,9 @@
-#include "ShapeParser.h"
 #include "CCircle.h"
 #include "CLineSegment.h"
 #include "CPoint.h"
 #include "CRectangle.h"
 #include "CTriangle.h"
+#include "CShapeParser.h"
 #include <sstream>
 #include <stdexcept>
 
