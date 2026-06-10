@@ -1,14 +1,18 @@
 #include "CTime.h"
 #include <iomanip>
 
+const char FILL_EMPTY = '0';
+const unsigned SECONDS_PER_MINUTE = 60;
+const unsigned HOURS_PER_DAY = 24;
+
 CTime::CTime(unsigned hours, unsigned minutes, unsigned seconds)
-	: m_totalSeconds(hours * 3600 + minutes * 60 + seconds)
-	, m_isValid(hours <= 23 && minutes <= 59 && seconds <= 59)
+	: m_totalSeconds(hours * SECONDS_PER_MINUTE * SECONDS_PER_MINUTE + minutes * SECONDS_PER_MINUTE + seconds)
+	, m_isValid(hours <= (HOURS_PER_DAY - 1) && minutes <= (SECONDS_PER_MINUTE - 1) && seconds <= (SECONDS_PER_MINUTE - 1))
 {
 }
 
 CTime::CTime(unsigned timestamp)
-	: m_totalSeconds(timestamp % SECONDS_PER_DAY)
+	: m_totalSeconds(timestamp % (SECONDS_PER_MINUTE * SECONDS_PER_MINUTE * HOURS_PER_DAY))
 	, m_isValid(true)
 {
 }
@@ -21,17 +25,17 @@ CTime::CTime(unsigned totalSeconds, bool isValid)
 
 unsigned CTime::GetHours() const
 {
-	return m_totalSeconds / 3600;
+	return (m_totalSeconds / (SECONDS_PER_MINUTE * SECONDS_PER_MINUTE));
 }
 
 unsigned CTime::GetMinutes() const
 {
-	return (m_totalSeconds % 3600) / 60;
+	return (m_totalSeconds % (SECONDS_PER_MINUTE * SECONDS_PER_MINUTE)) / SECONDS_PER_MINUTE;
 }
 
 unsigned CTime::GetSeconds() const
 {
-	return m_totalSeconds % 60;
+	return m_totalSeconds % SECONDS_PER_MINUTE;
 }
 
 unsigned CTime::GetTotalSeconds() const
@@ -46,10 +50,10 @@ bool CTime::IsValid() const
 
 unsigned CTime::Normalize(long long totalSeconds) const
 {
-	long long result = totalSeconds % SECONDS_PER_DAY;
+	long long result = (totalSeconds % (SECONDS_PER_MINUTE * SECONDS_PER_MINUTE * HOURS_PER_DAY));
 	if (result < 0)
 	{
-		result += SECONDS_PER_DAY;
+		result += (SECONDS_PER_MINUTE * SECONDS_PER_MINUTE * HOURS_PER_DAY);
 	}
 	return static_cast<unsigned>(result);
 }
@@ -58,7 +62,7 @@ CTime& CTime::operator++()
 {
 	if (m_isValid)
 	{
-		m_totalSeconds = (m_totalSeconds + 1) % SECONDS_PER_DAY;
+		m_totalSeconds = ((m_totalSeconds + 1) % (SECONDS_PER_MINUTE * SECONDS_PER_MINUTE * HOURS_PER_DAY));
 	}
 	return *this;
 }
@@ -74,7 +78,7 @@ CTime& CTime::operator--()
 {
 	if (m_isValid)
 	{
-		m_totalSeconds = m_totalSeconds == 0 ? SECONDS_PER_DAY - 1 : m_totalSeconds - 1;
+		m_totalSeconds = m_totalSeconds == 0 ? (SECONDS_PER_MINUTE * SECONDS_PER_MINUTE * HOURS_PER_DAY) - 1 : m_totalSeconds - 1;
 	}
 	return *this;
 }
