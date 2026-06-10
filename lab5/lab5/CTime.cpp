@@ -2,6 +2,7 @@
 #include <iomanip>
 
 const char FILL_EMPTY = '0';
+const std::string ERROR_INVALID = "INVALID";
 const unsigned SECONDS_PER_MINUTE = 60;
 const unsigned HOURS_PER_DAY = 24;
 
