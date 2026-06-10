@@ -1,5 +1,6 @@
 #pragma once
 #include "consts.h"
+#include <iomanip>
 #include <iosfwd>
 
 class CTime
