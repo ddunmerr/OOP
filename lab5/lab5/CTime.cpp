@@ -1,5 +1,4 @@
 #include "CTime.h"
-#include <iomanip>
 
 const char FILL_EMPTY = '0';
 const std::string ERROR_INVALID = "INVALID";
@@ -31,12 +30,12 @@ unsigned CTime::GetHours() const
 
 unsigned CTime::GetMinutes() const
 {
-	return (m_totalSeconds % (SECONDS_PER_MINUTE * SECONDS_PER_MINUTE)) / SECONDS_PER_MINUTE;
+	return ((m_totalSeconds % (SECONDS_PER_MINUTE * SECONDS_PER_MINUTE)) / SECONDS_PER_MINUTE);
 }
 
 unsigned CTime::GetSeconds() const
 {
-	return m_totalSeconds % SECONDS_PER_MINUTE;
+	return (m_totalSeconds % SECONDS_PER_MINUTE);
 }
 
 unsigned CTime::GetTotalSeconds() const
@@ -93,7 +92,7 @@ CTime CTime::operator--(int)
 
 CTime CTime::operator+(const CTime& other) const
 {
-	if (!m_isValid || !other.m_isValid)
+	if ((!m_isValid) || (!other.m_isValid))
 	{
 		return CTime(0, false);
 	}
@@ -102,7 +101,7 @@ CTime CTime::operator+(const CTime& other) const
 
 CTime CTime::operator-(const CTime& other) const
 {
-	if (!m_isValid || !other.m_isValid)
+	if ((!m_isValid) || (!other.m_isValid))
 	{
 		return CTime(0, false);
 	}
@@ -138,7 +137,7 @@ CTime& CTime::operator*=(unsigned multiplier)
 
 CTime CTime::operator/(unsigned divisor) const
 {
-	if (!m_isValid || divisor == 0)
+	if ((!m_isValid) || (divisor == 0))
 	{
 		return CTime(0, false);
 	}
@@ -147,11 +146,11 @@ CTime CTime::operator/(unsigned divisor) const
 
 unsigned CTime::operator/(const CTime& other) const
 {
-	if (!m_isValid || !other.m_isValid || other.m_totalSeconds == 0)
+	if ((!m_isValid) || (!other.m_isValid) || (other.m_totalSeconds == 0))
 	{
 		return 0;
 	}
-	return m_totalSeconds / other.m_totalSeconds;
+	return (m_totalSeconds / other.m_totalSeconds);
 }
 
 CTime& CTime::operator/=(unsigned divisor)
@@ -162,15 +161,15 @@ CTime& CTime::operator/=(unsigned divisor)
 
 bool CTime::operator==(const CTime& other) const
 {
-	if (!m_isValid && !other.m_isValid)
+	if ((!m_isValid) && (!other.m_isValid))
 	{
 		return true;
 	}
-	if (!m_isValid || !other.m_isValid)
+	if ((!m_isValid) || (!other.m_isValid))
 	{
 		return false;
 	}
-	return m_totalSeconds == other.m_totalSeconds;
+	return (m_totalSeconds == other.m_totalSeconds);
 }
 
 bool CTime::operator!=(const CTime& other) const
@@ -180,7 +179,7 @@ bool CTime::operator!=(const CTime& other) const
 
 bool CTime::operator<(const CTime& other) const
 {
-	if (!m_isValid || !other.m_isValid)
+	if ((!m_isValid) || (!other.m_isValid))
 	{
 		return false;
 	}
@@ -189,26 +188,26 @@ bool CTime::operator<(const CTime& other) const
 
 bool CTime::operator>(const CTime& other) const
 {
-	if (!m_isValid || !other.m_isValid)
+	if ((!m_isValid) || (!other.m_isValid))
 	{
 		return false;
 	}
-	return m_totalSeconds > other.m_totalSeconds;
+	return (m_totalSeconds > other.m_totalSeconds);
 }
 
 bool CTime::operator<=(const CTime& other) const
 {
-	return *this < other || *this == other;
+	return (*this < other || *this == other);
 }
 
 bool CTime::operator>=(const CTime& other) const
 {
-	return *this > other || *this == other;
+	return (*this > other || *this == other);
 }
 
 CTime operator*(unsigned multiplier, const CTime& time)
 {
-	return time * multiplier;
+	return (time * multiplier);
 }
 
 std::ostream& operator<<(std::ostream& os, const CTime& time)
