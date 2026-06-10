@@ -5,8 +5,6 @@
 class CTime
 {
 public:
-	static const unsigned SECONDS_PER_DAY = 86400;
-
 	CTime(unsigned hours, unsigned minutes, unsigned seconds = 0);
 	CTime(unsigned timeStamp = 0);
 
