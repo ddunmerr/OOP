@@ -262,6 +262,29 @@ BOOST_AUTO_TEST_SUITE(CTime_arithmetic)
 		BOOST_CHECK(!(invalid * 2).IsValid());
 		BOOST_CHECK(!(invalid / 2).IsValid());
 	}
+
+	/////////// ДОБАВИЛ
+	BOOST_AUTO_TEST_CASE(addition_with_large_overflow)
+	{
+		CTime t1(10, 0, 0);
+		CTime t2(0, 0, 01); // 200 часов = 8 дней + 8 часов
+		CTime result = t1 + t2 * 720000;
+		BOOST_CHECK(result.IsValid());
+		BOOST_CHECK_EQUAL(result.GetHours(), 18u);
+		BOOST_CHECK_EQUAL(result.GetMinutes(), 0u);
+		BOOST_CHECK_EQUAL(result.GetSeconds(), 0u);
+	}
+
+	// Умножение времени, перескакивающего через несколько суток
+	BOOST_AUTO_TEST_CASE(multiply_with_large_overflow)
+	{
+		CTime time(10, 30, 0);
+		CTime result = time * 100; // 1050 часов = 43 дня + 18 часов
+		BOOST_CHECK(result.IsValid());
+		BOOST_CHECK_EQUAL(result.GetHours(), 18u);
+		BOOST_CHECK_EQUAL(result.GetMinutes(), 0u);
+		BOOST_CHECK_EQUAL(result.GetSeconds(), 0u);
+	}
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(CTime_comparison)
@@ -327,6 +350,7 @@ BOOST_AUTO_TEST_SUITE(CTime_comparison)
 		BOOST_CHECK(!(valid < invalid));
 		BOOST_CHECK(!(invalid > valid));
 	}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 BOOST_AUTO_TEST_SUITE(CTime_io)
@@ -377,4 +401,5 @@ BOOST_AUTO_TEST_SUITE(CTime_io)
 		iss >> time;
 		BOOST_CHECK(iss.fail());
 	}
+
 BOOST_AUTO_TEST_SUITE_END()
