@@ -1,5 +1,5 @@
-#include "ShapeFinder.h"
-#include "ShapeParser.h"
+#include "CShapeFinder.h"
+#include "CShapeParser.h"
 #include "consts.h"
 #include <iostream>
 #include <memory>
@@ -30,8 +30,10 @@ int main()
 
 	if (!shapes.empty())
 	{
-		IShape* maxAreaShape = FindShapeWithMaxArea(shapes);
-		IShape* minPerimeterShape = FindShapeWithMinPerimeter(shapes);
+		CShapeFinder finder(shapes);
+
+		IShape* maxAreaShape = finder.FindShapeWithMaxArea();
+		IShape* minPerimeterShape = finder.FindShapeWithMinPerimeter();
 
 		std::cout << SHAPE_MAX_AREA << std::endl;
 		std::cout << maxAreaShape->ToString() << std::endl;
